@@ -1,0 +1,11 @@
+.itemFile {
+  display: flex;
+  padding: 0.5rem;
+  width: 100%;
+  border-bottom: 1px solid rgba(185, 187, 188, 0.5);
+}
+
+.itemFileIcon {
+  display: flex;
+  flex: 1;
+}

@@ -1,0 +1,45 @@
+body {
+  font-family: 'Roboto', Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color-scheme: light;
+  background-color: #fff;
+  margin: 0;
+}
+
+* {
+  outline: none;
+  scrollbar-width: none;
+  scrollbar-color: transparent;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+input {
+  color: #000;
+  background-color: initial;
+}
+
+textarea {
+  color: #000;
+  background-color: initial;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+}
