@@ -13,7 +13,7 @@ interface DataGridComponentProps {
 }
 
 const StyledDataGrid = styled(DataGrid)(() => ({
-  border: 'none',
+  // border: 'none',
   '& .MuiDataGrid-columnHeaders': {
     borderBottom: '1px solid #7A8295',
     width: '100%',
@@ -53,12 +53,13 @@ export default function DataGridComponent({
   }
 
   return (
-    <div className='dataGridContainer' style={{maxHeight: maxHeight}}>
+    <div
+      className='dataGridContainer'
+      style={{maxHeight: maxHeight, width: '80%'}}>
       <StyledDataGrid
         disableColumnFilter
         rows={rows}
         columns={cols}
-        // hideFooterPagination
         initialState={{
           pagination: {
             paginationModel: {
@@ -68,7 +69,6 @@ export default function DataGridComponent({
         }}
         pageSizeOptions={[15]}
         disableRowSelectionOnClick
-        // hideFooter
         disableColumnMenu
         rowHeight={rowHeight}
         localeText={customLocaleText}

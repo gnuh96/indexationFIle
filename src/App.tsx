@@ -6,11 +6,33 @@ import DataGridComponent from '@/components/dataGrid'
 import {GridColDef} from '@mui/x-data-grid'
 import IndexationService from './services/indexation.service'
 import {Indexation} from './types/indexation.type'
+import DocumentService from './services/document.service'
+import motVide from './helpers/motsVides.txt'
 
 function App() {
   const [listFile, setListFile] = useState<File[]>([])
   const [rows, setRows] = useState<any>([])
   const [rowsToAdd, setRowsToAdd] = useState<Indexation[]>([])
+  const [stopWords, setStopWords] = useState<string[]>([])
+
+  useEffect(() => {
+    const fetchStopWords = async () => {
+      try {
+        const response = await fetch(motVide)
+        if (response.ok) {
+          const content = await response.text()
+          const stopWordsArray = content.split('\n').map(word => word.trim())
+          setStopWords(stopWordsArray)
+        } else {
+          console.error('Failed to fetch stop words')
+        }
+      } catch (error) {
+        console.error('Error fetching stop words:', error)
+      }
+    }
+
+    fetchStopWords()
+  }, [])
 
   const handleUploadFile = (list: FileList) => {
     const listPush = [...list]
@@ -36,6 +58,12 @@ function App() {
             const fileContents = await readFileAsync(file)
             const listMots = indexationFile(fileContents)
 
+            await DocumentService.addDoc({
+              document: {
+                name: file.name,
+                content: fileContents,
+              },
+            })
             Object.keys(listMots).forEach(key => {
               newRowsToAdd.push({
                 mot: key,
@@ -77,8 +105,11 @@ function App() {
     const pattern = /[!'";:\-.,…\]\[\(«»)\n\s]+/g
 
     const res = strLowerCase.replace(pattern, ' ')
-    const table = res.split(' ').filter((substr: any) => substr.length > 2)
+    const table = res
+      .split(' ')
+      .filter((substr: any) => substr.length > 2 && !stopWords.includes(substr))
 
+    console.log(table)
     const tableFinal = table.reduce((accumulator: any, currentValue: any) => {
       if (accumulator[currentValue]) accumulator[currentValue]++
       else accumulator[currentValue] = 1
