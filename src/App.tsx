@@ -8,12 +8,13 @@ import IndexationService from './services/indexation.service'
 import {Indexation} from './types/indexation.type'
 import DocumentService from './services/document.service'
 import motVide from './helpers/motsVides.txt'
+import * as d3 from 'd3'
 
 function App() {
   const [listFile, setListFile] = useState<File[]>([])
   const [rows, setRows] = useState<any>([])
-  const [rowsToAdd, setRowsToAdd] = useState<Indexation[]>([])
   const [stopWords, setStopWords] = useState<string[]>([])
+  const [lemmatisation, setLemmatisation] = useState<any>([])
 
   useEffect(() => {
     const fetchStopWords = async () => {
@@ -32,6 +33,22 @@ function App() {
     }
 
     fetchStopWords()
+  }, [])
+
+  useEffect(() => {
+    const fetchLemmatisation = async () => {
+      try {
+        const response = await d3.csv('../Lexique380.csv')
+        if (!response) {
+          throw new Error('Data not found or inaccessible')
+        }
+        setLemmatisation(response)
+      } catch (error) {
+        console.error('Error fetching stop words:', error)
+      }
+    }
+
+    fetchLemmatisation()
   }, [])
 
   const handleUploadFile = (list: FileList) => {
@@ -67,6 +84,7 @@ function App() {
             Object.keys(listMots).forEach(key => {
               newRowsToAdd.push({
                 mot: key,
+                lemma: findLemmaByMot(key),
                 occurrence: listMots[key],
                 document: file.name,
               })
@@ -76,12 +94,15 @@ function App() {
 
         if (newRowsToAdd.length > 0) {
           await IndexationService.addIndex({indexations: newRowsToAdd})
-          console.log(newRowsToAdd)
-          setRowsToAdd([])
         }
       } catch (error) {
         console.error(error)
       }
+    }
+
+    const findLemmaByMot = (mot: string): string => {
+      const result = lemmatisation.find((item: any) => item.mot === mot)
+      return result ? result.lemma : 'non'
     }
 
     const readFileAsync = (file: File) => {
@@ -109,7 +130,6 @@ function App() {
       .split(' ')
       .filter((substr: any) => substr.length > 2 && !stopWords.includes(substr))
 
-    console.log(table)
     const tableFinal = table.reduce((accumulator: any, currentValue: any) => {
       if (accumulator[currentValue]) accumulator[currentValue]++
       else accumulator[currentValue] = 1
@@ -120,6 +140,7 @@ function App() {
 
   const cols: GridColDef[] = [
     {field: 'mot', headerName: 'Mot', flex: 1},
+    {field: 'lemma', headerName: 'Lemma', flex: 1},
     {field: 'occurrence', headerName: 'Occurrence', flex: 1},
     {
       field: 'document',
