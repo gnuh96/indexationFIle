@@ -8,7 +8,6 @@ function Search() {
   const [searchInputvalue, setSearchInputvalue] = useState<string>('')
   const [filteredWordList, setFilteredWordList] = useState<any>([])
 
-  console.log(filteredWordList)
   return (
     <div className='Search'>
       <DenseAppBar
