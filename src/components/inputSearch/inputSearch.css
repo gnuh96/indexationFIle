@@ -1,0 +1,50 @@
+.inputSearchContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  flex-direction: column;
+}
+
+.inputSearchWrapper {
+  display: flex;
+  align-items: center;
+  width: 20rem;
+  padding: 0 1rem;
+  border-radius: 1.5rem;
+  background-color: rgb(238, 241, 244, 0.5);
+  height: 3rem;
+}
+
+.inputSearchWrapper input {
+  flex-grow: 1;
+  border: none;
+  padding: 0 10px;
+  font-size: 1rem;
+  color: rgb(155, 165, 183);
+}
+
+.submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  width: 200px;
+  padding: 20px;
+}
+
+.submitButton button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 2.5rem;
+  background-color: transparent;
+  border-radius: 10px;
+  border: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  color: #fff;
+  background-color: #caa756;
+}

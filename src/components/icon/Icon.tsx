@@ -1,5 +1,7 @@
 import txt_icon from '@/assets/png/txt-text-file-extension-symbol.png'
 import close_icon from '@/assets/png/close.png'
+import menu_icon from '@/assets/png/menu.png'
+import search from '@/assets/svg/search.svg'
 
 interface IconPropsType {
   type: string
@@ -29,6 +31,20 @@ export default function Icon({
     close_icon: (
       <img
         src={close_icon}
+        alt='icon'
+        style={{...iconStyle, height: size, width: size}}
+      />
+    ),
+    menu_icon: (
+      <img
+        src={menu_icon}
+        alt='icon'
+        style={{...iconStyle, height: size, width: size}}
+      />
+    ),
+    search: (
+      <img
+        src={search}
         alt='icon'
         style={{...iconStyle, height: size, width: size}}
       />
