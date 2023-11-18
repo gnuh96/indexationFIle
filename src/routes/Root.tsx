@@ -1,21 +1,33 @@
 import {useEffect, useState} from 'react'
 import './css/Root.css'
 import InputFile from '@/components/inputFile/InputFile'
-import ItemFile from '@/components/itemFile/ItemFile'
-import DataGridComponent from '@/components/dataGrid'
-import {GridColDef} from '@mui/x-data-grid'
 import motVide from '../helpers/motsVides.txt'
 import * as d3 from 'd3'
 import IndexationService from '@/services/indexation.service'
-import {Indexation} from '@/types/indexation.type'
+import {BlockItemType, Indexation} from '@/types/indexation.type'
 import DocumentService from '@/services/document.service'
 import DenseAppBar from '@/components/appBar'
+import {Box, Drawer} from '@mui/material'
+import SearchBlocksWrapper from '@/components/block/SearchBlocksWrapper'
+import {blockItems} from '@/helpers/constant'
+import {arrayMove} from '@dnd-kit/sortable'
+import {getLocalStorageItem, setLocalStorageItem} from '@/helpers/functions'
+import NavigationMenu from '@/components/NavigationMenu'
+import _ from 'lodash'
+
+const drawerWidth = 350
 
 function Root() {
   const [listFile, setListFile] = useState<File[]>([])
-  const [rows, setRows] = useState<any>([])
   const [stopWords, setStopWords] = useState<string[]>([])
   const [lemmatisation, setLemmatisation] = useState<any>([])
+  const initialBlockItemList = getLocalStorageItem(
+    'block-result-list',
+    blockItems,
+  )
+  const [blockItemList, setBlockItemList] =
+    useState<BlockItemType[]>(initialBlockItemList)
+  const [refresh, setRefresh] = useState(false)
 
   useEffect(() => {
     const fetchStopWords = async () => {
@@ -59,14 +71,6 @@ function Root() {
     setListFile(newListFile)
   }
 
-  const onClickShowIndex = async () => {
-    try {
-      const updatedRows = await IndexationService.getAllIndex()
-      setRows(updatedRows)
-    } catch (error) {
-      console.error(error)
-    }
-  }
   useEffect(() => {
     const processAndAddToDB = async () => {
       try {
@@ -120,6 +124,7 @@ function Root() {
     }
 
     processAndAddToDB()
+    setTimeout(() => setRefresh(!refresh), 5000)
   }, [listFile])
 
   const indexationFile = (fileContents: any) => {
@@ -139,41 +144,74 @@ function Root() {
     return tableFinal
   }
 
-  const cols: GridColDef[] = [
-    {field: 'mot', headerName: 'Mot', flex: 1},
-    {field: 'lemma', headerName: 'Lemma', flex: 1},
-    {field: 'occurrence', headerName: 'Occurrence', flex: 1},
-    {
-      field: 'document',
-      headerName: 'Document',
-      flex: 1,
-    },
-  ]
+  const handleSetBlockItemList = (activeId: string, overId: string) => {
+    setBlockItemList(items => {
+      const activeIndex = _.findIndex(
+        items,
+        (item: BlockItemType) => activeId === item.id,
+      )
+      const overIndex = _.findIndex(
+        items,
+        (item: BlockItemType) => overId === item.id,
+      )
+
+      const newBlockItemList = arrayMove(items, activeIndex, overIndex)
+
+      setLocalStorageItem('block-result-list', JSON.stringify(newBlockItemList))
+      return newBlockItemList
+    })
+  }
   return (
     <div className='Root'>
-      <DenseAppBar
-        title='Indexation'
-        position='fixed'
-        sx={{zIndex: (theme: any) => theme.zIndex.drawer + 1}}
-      />
-      <div className='AppUploadFile'>
-        <InputFile onUpload={handleUploadFile} />
-        <div className='listFile'>
-          {listFile &&
-            listFile.map((file: File, i) => (
-              <ItemFile key={`item_file_${i}`} fileName={file.name} />
-            ))}
-        </div>
-      </div>
-      <div className='AppIndexFile'>
-        <button onClick={onClickShowIndex}>Show Indexation</button>
-        <DataGridComponent
-          rows={rows}
-          cols={cols}
-          maxHeight='80%'
-          rowHeight={40}
+      <Box sx={{display: 'flex', width: '100%'}}>
+        <DenseAppBar
+          title='Indexation'
+          position='fixed'
+          sx={{zIndex: (theme: any) => theme.zIndex.drawer + 1}}
         />
-      </div>
+        <Drawer
+          variant='permanent'
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+            },
+          }}>
+          <Box
+            sx={{
+              paddingLeft: '12px',
+              paddingRight: '12px',
+              paddingTop: 10,
+            }}>
+            <InputFile onUpload={handleUploadFile} />
+          </Box>
+          <Box style={{flex: 1}}>
+            <NavigationMenu
+              blockItemList={blockItemList}
+              handleSetBlockItemList={handleSetBlockItemList}
+            />
+          </Box>
+        </Drawer>
+        <Box
+          component='main'
+          sx={{
+            flexGrow: 1,
+            paddingLeft: 3,
+            paddingRight: 3,
+            paddingTop: 10,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+          }}>
+          <SearchBlocksWrapper
+            blockItemList={blockItemList}
+            refresh={refresh}
+          />
+        </Box>
+      </Box>
     </div>
   )
 }

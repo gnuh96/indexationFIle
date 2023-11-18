@@ -29,12 +29,11 @@ export default function InputFile({onUpload}: InputFileProps) {
   return (
     <div className='inputFileContainer'>
       <Typography color='neutral' level='h3' noWrap={false} variant='plain'>
-        Telecharger les fichiers
+        Télécharger les fichiers
       </Typography>
       <div className='inputFileWrapper' onClick={handleButtonClick}>
         <input
           type='file'
-          //   style={{display: 'none'}}
           multiple
           onChange={handleFileChange}
           ref={fileInputRef}

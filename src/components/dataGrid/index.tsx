@@ -13,7 +13,6 @@ interface DataGridComponentProps {
 }
 
 const StyledDataGrid = styled(DataGrid)(() => ({
-  // border: 'none',
   '& .MuiDataGrid-columnHeaders': {
     borderBottom: '1px solid #7A8295',
     width: '100%',

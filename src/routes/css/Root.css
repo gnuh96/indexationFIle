@@ -4,19 +4,6 @@
   height: 100vh;
 }
 
-.AppUploadFile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 50%;
-  border-right: 1px solid rgba(185, 187, 188, 0.5);
-  padding-top: 70px;
-}
-
-.listFile {
-  width: 80%;
-}
-
 .AppIndexFile {
   width: 50%;
   height: 100%;

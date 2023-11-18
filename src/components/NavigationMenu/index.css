@@ -1,0 +1,28 @@
+.NavItem {
+  margin: .5rem 0;
+  /* opacity: .4; */
+}
+
+.NavItem.Active {
+  opacity: 1;
+}
+
+.NavItemLink {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none ;
+  align-items: center;
+}
+
+.NavItem :hover{
+  background-color: #1b5289;
+}
+
+.NavItemLabel {
+  flex: 4;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}
+

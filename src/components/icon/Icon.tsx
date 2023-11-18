@@ -2,6 +2,9 @@ import txt_icon from '@/assets/png/txt-text-file-extension-symbol.png'
 import close_icon from '@/assets/png/close.png'
 import menu_icon from '@/assets/png/menu.png'
 import search from '@/assets/svg/search.svg'
+import DragIndicatorOutlinedIcon from '@mui/icons-material/DragIndicatorOutlined'
+import file_icon from '../../assets/png/file-icon-blanc.png'
+import index from '../../assets/png/list.png'
 
 interface IconPropsType {
   type: string
@@ -49,6 +52,9 @@ export default function Icon({
         style={{...iconStyle, height: size, width: size}}
       />
     ),
+    drag: <DragIndicatorOutlinedIcon sx={iconStyle} />,
+    listDoc: <img src={file_icon} alt='icon' />,
+    indexation: <img src={index} alt='icon' />,
   }
   return (
     <div
