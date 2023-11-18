@@ -18,7 +18,6 @@ export default function ListFileBlock({
     const fetchListFile = async () => {
       try {
         const list_doc = await DocumentService.getAllDoc()
-        console.log(list_doc)
         setListFile(list_doc)
       } catch (error) {
         console.error(error)
