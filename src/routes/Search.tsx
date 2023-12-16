@@ -7,6 +7,7 @@ import ItemFile from '@/components/itemFile/ItemFile'
 function Search() {
   const [searchInputvalue, setSearchInputvalue] = useState<string>('')
   const [filteredWordList, setFilteredWordList] = useState<any>([])
+  const [noRes, setNoRes] = useState(false)
 
   return (
     <div className='Search'>
@@ -21,8 +22,17 @@ function Search() {
           searchValue={searchInputvalue}
           setSearchValue={setSearchInputvalue}
           setResults={setFilteredWordList}
+          setNoRes={setNoRes}
         />
       </div>
+      {noRes && (
+        <span
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>{`Il n'y a pas de ce mot dans l'indexation`}</span>
+      )}
       <div className='listFile'>
         {filteredWordList &&
           filteredWordList.map((ele: any, i: any) => (

@@ -36,6 +36,7 @@ const StyledDataGrid = styled(DataGrid)(() => ({
   },
   '& .MuiDataGrid-cell': {
     justifyContent: 'center',
+    minHeight: '40px !important',
   },
 }))
 
@@ -51,10 +52,11 @@ export default function DataGridComponent({
     noRowsLabel: noRowText,
   }
 
+  const gridHeight = rows.length > 0 ? 'auto' : 200
   return (
     <div
       className='dataGridContainer'
-      style={{maxHeight: maxHeight, width: '80%'}}>
+      style={{maxHeight: maxHeight, width: '80%', height: gridHeight}}>
       <StyledDataGrid
         disableColumnFilter
         rows={rows}
@@ -69,6 +71,7 @@ export default function DataGridComponent({
         pageSizeOptions={[15]}
         disableRowSelectionOnClick
         disableColumnMenu
+        getRowHeight={() => 'auto'}
         rowHeight={rowHeight}
         localeText={customLocaleText}
         onRowClick={onRowClick}

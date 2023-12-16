@@ -66,9 +66,8 @@ function Root() {
 
   const handleUploadFile = (list: FileList) => {
     const listPush = [...list]
-    const newListFile = [...listFile]
-    newListFile.push(...listPush)
-    setListFile(newListFile)
+
+    setListFile(listPush)
   }
 
   useEffect(() => {
@@ -78,12 +77,13 @@ function Root() {
         if (listFile.length > 0) {
           for (const file of listFile) {
             const fileContents = await readFileAsync(file)
+            const fileBase64 = await convertFiletoBase64Async(file)
             const listMots = indexationFile(fileContents)
-
             await DocumentService.addDoc({
               document: {
                 name: file.name,
                 content: fileContents,
+                urlBase64: fileBase64,
               },
             })
             Object.keys(listMots).forEach(key => {
@@ -120,6 +120,19 @@ function Root() {
           reject(error)
         }
         reader.readAsText(file)
+      })
+    }
+    const convertFiletoBase64Async = (file: File) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          const base64String = reader.result as string
+          resolve(base64String)
+        }
+        reader.onerror = error => {
+          reject(error)
+        }
+        reader.readAsDataURL(file)
       })
     }
 

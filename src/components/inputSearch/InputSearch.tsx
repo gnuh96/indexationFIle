@@ -8,6 +8,7 @@ interface InputSearchProps {
   searchValue: string
   setSearchValue: Dispatch<SetStateAction<string>>
   setResults: (results: any[]) => void
+  setNoRes: Dispatch<SetStateAction<boolean>>
 }
 
 export default function InputSearch({
@@ -15,18 +16,23 @@ export default function InputSearch({
   searchValue,
   setSearchValue,
   setResults,
+  setNoRes,
 }: InputSearchProps) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value)
-
-    if (event.target.value === '') {
-      setResults([])
-    }
+    setNoRes(false)
   }
 
   const onClickButton = async () => {
-    const listWord = await IndexationService.getAllIndexByWord(searchValue)
-    setResults(listWord)
+    if (searchValue === '') {
+      setResults([])
+    } else {
+      const listWord = await IndexationService.getAllIndexByWord(searchValue)
+      if (listWord.length === 0) {
+        setNoRes(true)
+      }
+      setResults(listWord)
+    }
   }
 
   return (

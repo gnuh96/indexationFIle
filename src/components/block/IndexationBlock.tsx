@@ -28,13 +28,14 @@ export default function IndexationBlock({
   }, [refresh])
 
   const cols: GridColDef[] = [
-    {field: 'mot', headerName: 'Mot', flex: 1},
-    {field: 'lemma', headerName: 'Lemma', flex: 1},
-    {field: 'occurrence', headerName: 'Occurrence', flex: 1},
+    {field: 'mot', headerName: 'Mot', flex: 1, sortable: false},
+    {field: 'lemma', headerName: 'Lemma', flex: 1, sortable: false},
+    {field: 'occurrence', headerName: 'Occurrence', flex: 1, sortable: false},
     {
       field: 'document',
       headerName: 'Document',
       flex: 1,
+      sortable: false,
     },
   ]
   return (

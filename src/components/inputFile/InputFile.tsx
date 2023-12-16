@@ -20,12 +20,6 @@ export default function InputFile({onUpload}: InputFileProps) {
     }
   }
 
-  //   useEffect(() => {
-  //     if (fileInputRef.current !== null) {
-  //         fileInputRef.current.setAttribute('directory', '')
-  //       fileInputRef.current.setAttribute('webkitdirectory', '')
-  //     }
-  //   }, [fileInputRef])
   return (
     <div className='inputFileContainer'>
       <Typography color='neutral' level='h3' noWrap={false} variant='plain'>

@@ -12,6 +12,13 @@ const getAllIndexByWord = async (mot: string) => {
   return response.data
 }
 
+const getAllIndexByDoc = async (doc: string) => {
+  const response = await instance.get(`/api/indexations`, {
+    params: {doc},
+  })
+  return response.data
+}
+
 const deleteAllIndex = async () => {
   const response = await instance.delete(`/api/indexations`)
   return response.data
@@ -26,6 +33,7 @@ const IndexationService = {
   getAllIndexByWord,
   deleteAllIndex,
   addIndex,
+  getAllIndexByDoc,
 }
 
 export default IndexationService

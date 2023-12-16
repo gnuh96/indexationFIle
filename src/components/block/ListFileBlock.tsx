@@ -5,6 +5,7 @@ import {ResultBlockType} from '@/types/indexation.type'
 import SearchResultBlock from './SearchResultBlock'
 import ItemFile from '../itemFile/ItemFile'
 import DocumentService from '@/services/document.service'
+import IndexationService from '@/services/indexation.service'
 
 export default function ListFileBlock({
   title,
@@ -26,6 +27,7 @@ export default function ListFileBlock({
     fetchListFile()
   }, [refresh])
 
+  const openUrl = (url: string) => window.open(url)
   return (
     <SearchResultBlock
       style={{
