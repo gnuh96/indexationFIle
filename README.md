@@ -1,27 +1,31 @@
-# React + TypeScript + Vite
+# Indexation File - Projet Technique Informatique & Web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ce projet fait partie du module Technique Informatique & Web et est composé de deux parties : le Front et le Back.
 
-Currently, two official plugins are available:
+## Front-end
+Le code du Front-end est disponible [ici](https://github.com/gnuh96/indexationFIle).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Back-end
+Le code du Back-end est disponible [ici](https://github.com/gnuh96/index_mongo_back).
 
-## Expanding the ESLint configuration
+### Prérequis
+Avant de commencer, assurez-vous d'avoir Docker et Node.js installés sur votre machine.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [Installer Docker](https://docs.docker.com/desktop/install/)
+- [Installer Node.js](https://nodejs.org/en/download)
 
-- Configure the top-level `parserOptions` property like this:
+### Installation
+Après l'installation des prérequis, exécutez la commande suivante pour installer les packages nécessaires :
+```npm install```
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+### Lancement du Front-end
+Pour lancer le Front-end, utilisez la commande suivante :
+```npm run dev```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Lancement du Back-end
+Pour lancer le Back-end, suivez les instructions disponibles [ici](https://github.com/gnuh96/index_mongo_back).
+
+N'oubliez pas de consulter le Back-end pour une expérience complète du projet.
+
+### Auteur
+NGUYEN Tuan Hung
